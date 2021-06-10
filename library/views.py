@@ -101,13 +101,14 @@ class FindView(ListModelMixin,
                 q = chain.from_iterable(set(q))
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)
+              
+            serializer = self.get_serializer(q, many=True)
+            
+            return Response(serializer.data)
+
         except Exception:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = self.get_serializer(q, many=True)
-
-        return Response(serializer.data)
-
+          
 
 class GenreView(ListModelMixin,
                 GenericAPIView,
